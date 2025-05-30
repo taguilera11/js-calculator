@@ -41,7 +41,6 @@ const calculate = {
 function useOperator(operator) {
     const currentValue = Number(calculatorDisplay.textContent);
     if (operatorValue && awaitingNextValue) {
-        console.log("entra")
         operatorValue = operator;
     }
 
@@ -58,14 +57,19 @@ function useOperator(operator) {
     operatorValue = operator;
 };
 
-function resetAll() {
-    firstValue = 0;
-    awaitingNextValue = false;
-    operatorValue = "";
-    calculatorDisplay.textContent = "0";
-}
-
 clearBtn.addEventListener("click", resetAll);
+
+function resetAll() {
+    if (firstValue !== 0 && !awaitingNextValue) {
+          awaitingNextValue = true;
+        calculatorDisplay.textContent = "0";
+    } else {
+        firstValue = 0;
+        awaitingNextValue = false;
+        operatorValue = "";
+        calculatorDisplay.textContent = "0";
+    }
+}
 
 function addDecimal() {
     if (awaitingNextValue) {
